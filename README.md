@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Event List with Search
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application for viewing and searching upcoming events.
 
-## Available Scripts
+The focus of this project is clear component boundaries, predictable derived state, accessibility, and testable search behavior.
 
-In the project directory, you can run:
+<img width="760" height="591" alt="image" src="https://github.com/user-attachments/assets/06f0810b-1830-4eac-973e-75f998da98cc" />
 
-### `npm start`
+## Core Functionality
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Fetch and display a list of upcoming events
+- Sort events by soonest date
+- Filter events by name or location as the user types
+- Display an empty state when no results match
+- Visual highlighting of matched search terms
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Running the App
+```
+npm install
+npm start
+```
 
-### `npm test`
+## Testing
+```
+npm test
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Testing Approach
 
-### `npm run build`
+The project includes both unit-level and integration-level tests focused on behavior that would realistically regress during refactors.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Unit tests
+  - Core filtering and sorting logic is tested via a pure function (getFilteredSortedEvents)
+  - Verifies case-insensitive search, whitespace trimming, correct sorting, and immutability
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Integration tests
+  - Validate end-to-end user behavior: data loading, searching, and empty states
+  - Tests interact with the UI as a user would, rather than asserting implementation details
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This approach keeps logic easy to reason about while ensuring user-visible behavior remains stable.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Technical Decisions & Trade-offs
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Derived State
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Filtering and sorting are treated as derived state rather than stored state.
+This avoids synchronization bugs and keeps data flow predictable.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Accessibility
 
-## Learn More
+- Semantic landmarks and list markup
+- Explicit form labels (no placeholder-only inputs)
+- Keyboard-navigable scroll container
+- Screen reader checks performed with VoiceOver
+- Automated accessibility checks using axe DevTools
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Accessibility improvements focus on correctness and usability without adding unnecessary complexity.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Search Behavior
 
-### Code Splitting
+Search is performed client-side using simple string matching.
+Given the small dataset size, debouncing was intentionally avoided to preserve immediate feedback and reduce complexity.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Highlighting
 
-### Analyzing the Bundle Size
+Search term highlighting is implemented as a visual enhancement only. 
+Core search behavior does not depend on highlighting logic.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Future Improvements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+If this were to evolve beyond a take-home exercise:
 
-### Advanced Configuration
+- Server-side search for larger datasets
+- Pagination or virtualized lists
+- Error boundaries and retry handling
+- URL-driven search state
+- CI checks for tests and accessibility
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+## Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- React
+- TypeScript
+- Tailwind CSS
+- React Testing Library
+- Jest
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

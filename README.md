@@ -22,7 +22,7 @@ npm start
 
 ## Testing
 ```
-npm test
+npm test -- --watchAll
 ```
 
 ### Testing Approach
